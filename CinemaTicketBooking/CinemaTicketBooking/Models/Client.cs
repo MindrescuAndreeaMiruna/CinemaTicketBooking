@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CinemaTicketBooking.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace FilmTicketBooking.Models
 {
-    public class Client
+    public class Client : BaseEntity
     {
         [Required]
         public int Id { get; set; }
