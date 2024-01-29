@@ -6,6 +6,10 @@ namespace CinemaTicketBooking.Data
     public class Context : DbContext
     {
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Film> Films { get; set; }
+
+
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
@@ -14,6 +18,7 @@ namespace CinemaTicketBooking.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
         }
     }
