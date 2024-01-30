@@ -1,12 +1,11 @@
-﻿using CinemaTicketBooking.Models.Base;
+﻿using CinemaTicketBooking.Models;
+using CinemaTicketBooking.Models.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace FilmTicketBooking.Models
 {
     public class Client : BaseEntity
     {
-        [Required]
-        public int Id { get; set; }
 
         [StringLength(50)]
         public string FirstName { get; set; }
@@ -26,7 +25,10 @@ namespace FilmTicketBooking.Models
         [StringLength(50)]
         public string Email { get; set; }
 
+        public ICollection<RelatieClientFilm> RelatieClientFilms { get; set; }
 
+        public Ticket Ticket { get; set; }
+        public Guid TicketId { get; set; }
 
 
     }

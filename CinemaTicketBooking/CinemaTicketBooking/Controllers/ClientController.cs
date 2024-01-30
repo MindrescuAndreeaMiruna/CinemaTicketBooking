@@ -1,4 +1,7 @@
 ﻿using CinemaTicketBooking.Data;
+using CinemaTicketBooking.Models.DTOs;
+
+//using CinemaTicketBooking.Models.DTOs;
 using FilmTicketBooking.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -13,7 +16,7 @@ namespace FilmTicketBooking.Controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly Context _context;
+        private  Context _context;
 
         public ClientController(Context context)
         {
@@ -25,10 +28,37 @@ namespace FilmTicketBooking.Controllers
         {
             return Ok(await _context.Clients.ToListAsync());
         }
+
+        [HttpGet("clientById/{id}")]
+        public async Task<IActionResult> GetClientsById([FromRoute] Guid id)
+        {
+            var clientById = _context.Clients.FirstOrDefault(x => x.Id == id);
+            return Ok(clientById);
+        }
+
+        [HttpPost("createClient")]
+        public async Task<IActionResult> Create(ClientDTO clientDTO)
+        {
+            var newClient = new Client();
+            newClient.FirstName = clientDTO.FirstName;
+            newClient.LastName = clientDTO.LastName;
+            newClient.Age = clientDTO.Age;
+            newClient.Email = clientDTO.Email;
+
+            await _context.AddAsync(newClient);
+            await _context.SaveChangesAsync();
+
+            return Ok(newClient);
+
+
+
+        }
+
+    
     }
 }
 
-
+        
 
 /*
 public class ClientController : ControllerBase

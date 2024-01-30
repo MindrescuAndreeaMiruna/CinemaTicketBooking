@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaTicketBooking.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240129171319_FilmMigration")]
-    partial class FilmMigration
+    [Migration("20240130150730_DatabaseRelations")]
+    partial class DatabaseRelations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,13 +25,26 @@ namespace CinemaTicketBooking.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CinemaTicketBooking.Models.RelatieClientFilm", b =>
+                {
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FilmId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ClientId", "FilmId");
+
+                    b.HasIndex("FilmId");
+
+                    b.ToTable("RelatieClientFilm");
+                });
+
             modelBuilder.Entity("FilmTicketBooking.Models.Client", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -63,18 +76,22 @@ namespace CinemaTicketBooking.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<Guid>("TicketId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TicketId")
+                        .IsUnique();
 
                     b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("FilmTicketBooking.Models.Film", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
@@ -100,11 +117,9 @@ namespace CinemaTicketBooking.Migrations
 
             modelBuilder.Entity("FilmTicketBooking.Models.Ticket", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
@@ -113,6 +128,9 @@ namespace CinemaTicketBooking.Migrations
                     b.Property<DateTime?>("DateModified")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FilmId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("HallNumber")
                         .HasColumnType("int");
@@ -130,7 +148,68 @@ namespace CinemaTicketBooking.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FilmId");
+
                     b.ToTable("Tickets");
+                });
+
+            modelBuilder.Entity("CinemaTicketBooking.Models.RelatieClientFilm", b =>
+                {
+                    b.HasOne("FilmTicketBooking.Models.Client", "Client")
+                        .WithMany("RelatieClientFilms")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FilmTicketBooking.Models.Film", "Film")
+                        .WithMany("RelatieClientFilms")
+                        .HasForeignKey("FilmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Film");
+                });
+
+            modelBuilder.Entity("FilmTicketBooking.Models.Client", b =>
+                {
+                    b.HasOne("FilmTicketBooking.Models.Ticket", "Ticket")
+                        .WithOne("Client")
+                        .HasForeignKey("FilmTicketBooking.Models.Client", "TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ticket");
+                });
+
+            modelBuilder.Entity("FilmTicketBooking.Models.Ticket", b =>
+                {
+                    b.HasOne("FilmTicketBooking.Models.Film", "Film")
+                        .WithMany("Tickets")
+                        .HasForeignKey("FilmId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Film");
+                });
+
+            modelBuilder.Entity("FilmTicketBooking.Models.Client", b =>
+                {
+                    b.Navigation("RelatieClientFilms");
+                });
+
+            modelBuilder.Entity("FilmTicketBooking.Models.Film", b =>
+                {
+                    b.Navigation("RelatieClientFilms");
+
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("FilmTicketBooking.Models.Ticket", b =>
+                {
+                    b.Navigation("Client")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

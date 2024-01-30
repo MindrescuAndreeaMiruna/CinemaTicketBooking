@@ -1,12 +1,11 @@
 ﻿using CinemaTicketBooking.Models.Base;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FilmTicketBooking.Models
 {
     public class Ticket : BaseEntity
     {
-        [Required]
-        public int Id { get; set; }
 
 
         [Required]
@@ -19,12 +18,14 @@ namespace FilmTicketBooking.Models
         [Range(0, 11)]
         public int Row { get; set; }
 
-    
         [StringLength(10)]
         public string HourAndMinute { get; set; }
 
+       public Film Film { get; set; }
 
+       public Guid FilmId { get; set; }
 
+        public Client Client { get; set; }
 
     }
 }
