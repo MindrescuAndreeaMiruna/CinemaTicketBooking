@@ -1,5 +1,8 @@
 ﻿using CinemaTicketBooking.Data;
 using CinemaTicketBooking.Models.DTOs;
+using CinemaTicketBooking.Repositories;
+using CinemaTicketBooking.Services.ClientService;
+
 
 //using CinemaTicketBooking.Models.DTOs;
 using FilmTicketBooking.Models;
@@ -14,7 +17,75 @@ namespace FilmTicketBooking.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class ClientController : ControllerBase
+    {
+        public readonly IClientService _clientService;
+        public readonly IClientsRepository _clientsRepository;
+
+        public ClientController(IClientService clientService, IClientsRepository clientsRepository)
+        {
+            _clientService = clientService;
+            _clientsRepository = clientsRepository;
+        }
+
+        [HttpGet("GetClientById")]
+        public IActionResult GetClientById([FromQuery] Guid id)
+        {
+            var client = _clientService.GetClientById(id);
+            if(client == null)
+            {
+                return NotFound();
+            }
+            return Ok(client);
+        }
+
+        [HttpGet("GetClientByFirstName")]
+        public IActionResult GetClientByFirstName([FromQuery] string firstName)
+        {
+            var client = _clientService.GetClientByFirstName(firstName);
+            if(client == null)
+            { 
+            return NotFound();
+            }
+            return Ok(client);
+        }
+
+        [HttpGet("GetAllClients")]
+        public IActionResult GetAllClients()
+        {
+            var clients = _clientService.GetAllClients();
+            return Ok(clients);
+        }
+
+        [HttpDelete("DeleteClient")]
+        public IActionResult DeleteClient([FromQuery] Guid id)
+        {
+            _clientService.DeleteClient(id);
+            return NoContent();
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* public class ClientController : ControllerBase
     {
         private  Context _context;
 
@@ -58,7 +129,7 @@ namespace FilmTicketBooking.Controllers
     }
 }
 
-        
+ */       
 
 /*
 public class ClientController : ControllerBase
