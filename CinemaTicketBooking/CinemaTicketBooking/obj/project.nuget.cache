@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "pJzi5Hl4bprfDhm9Zyvl8fX6ga44H5/BcoU+MSu8iFQvROcqQcWuvMNbIHlC45jc0GVTsu0BCuNPrchfP743Zg==",
+  "dgSpecHash": "CC0bVeexAkLazZTL9czm6AUCrOSG5G93f8yXgvs0KVvAXWlooXGKVypDausMsSAYSIQF5G124Pa7ciFMAI5wqQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Utilizator\\Desktop\\asp.net\\CinemaTicketBooking\\CinemaTicketBooking\\CinemaTicketBooking.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Utilizator\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\Utilizator\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Utilizator\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Utilizator\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Utilizator\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
