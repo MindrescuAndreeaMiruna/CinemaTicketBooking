@@ -1,6 +1,9 @@
 using AutoMapper;
 using CinemaTicketBooking.Data;
+using CinemaTicketBooking.Helper;
 using CinemaTicketBooking.Helper.Extensions;
+using CinemaTicketBooking.Helper.Middleware;
+using CinemaTicketBooking.Helper.Seeders;
 using CinemaTicketBooking.Repositories;
 using CinemaTicketBooking.Repositories.GenericRepository;
 using CinemaTicketBooking.Services.ClientService;
@@ -22,10 +25,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddRepositories();
 builder.Services.AddServices();
+builder.Services.AddSeeders();
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 var app = builder.Build();
+//SeedData(app);
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline. //colectie de middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -35,7 +41,19 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 
 app.Run();
+
+
+void SeedData(IHost app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<ClientSeeder>();
+        service.SeedInitialClient();
+    }
+}

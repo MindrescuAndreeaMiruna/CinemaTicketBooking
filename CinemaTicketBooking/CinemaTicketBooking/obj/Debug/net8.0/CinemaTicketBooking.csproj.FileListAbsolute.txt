@@ -139,3 +139,4 @@ C:\Users\Utilizator\Desktop\asp.net\CinemaTicketBooking\CinemaTicketBooking\bin\
 C:\Users\Utilizator\Desktop\asp.net\CinemaTicketBooking\CinemaTicketBooking\obj\Debug\net8.0\CinemaTicketBooking.sourcelink.json
 C:\Users\Utilizator\Desktop\asp.net\CinemaTicketBooking\CinemaTicketBooking\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\Utilizator\Desktop\asp.net\CinemaTicketBooking\CinemaTicketBooking\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Utilizator\Desktop\asp.net\CinemaTicketBooking\CinemaTicketBooking\bin\Debug\net8.0\BCrypt.Net-Core.dll

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CC0bVeexAkLazZTL9czm6AUCrOSG5G93f8yXgvs0KVvAXWlooXGKVypDausMsSAYSIQF5G124Pa7ciFMAI5wqQ==",
+  "dgSpecHash": "buvo54gsGMF4UuDoDlza2Esn0yiYPLqUtLNC+R+sw3RVivLFK5IKVa9MY6Cj5ZmSi18+vSGIKVvjn6r+pcYviA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Utilizator\\Desktop\\asp.net\\CinemaTicketBooking\\CinemaTicketBooking\\CinemaTicketBooking.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Utilizator\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Utilizator\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Utilizator\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\Utilizator\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Users\\Utilizator\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Utilizator\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\8.0.1\\microsoft.aspnetcore.jsonpatch.8.0.1.nupkg.sha512",
     "C:\\Users\\Utilizator\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
