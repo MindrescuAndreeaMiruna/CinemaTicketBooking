@@ -16,6 +16,7 @@ namespace CinemaTicketBooking.Helper.Seeders
         {
             if(!_context.Clients.Any())
             {
+                var ticket1 = _context.Tickets.First();
                 var client1 = new Client
                 {
                     FirstName = "Alex",
@@ -23,9 +24,11 @@ namespace CinemaTicketBooking.Helper.Seeders
                     Age = 21,
                     TelephoneNumber = "0741258740",
                     Email = "alex@yahoo.com",
-                   // DateCreated = DateTime.Now
+                    Ticket = ticket1
+                   
                 };
-
+              
+                var ticket2 = _context.Tickets.Skip(1).FirstOrDefault();
                 var client2 = new Client
                 {
                     FirstName = "Andreea",
@@ -33,7 +36,8 @@ namespace CinemaTicketBooking.Helper.Seeders
                     Age = 21,
                     TelephoneNumber = "0741265740",
                     Email = "andr27@yahoo.com",
-                   // DateCreated = DateTime.Now
+                    Ticket = ticket2
+                   
                 };
 
                 _context.Clients.Add(client1);

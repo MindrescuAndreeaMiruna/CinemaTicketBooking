@@ -7,7 +7,6 @@ namespace CinemaTicketBooking.Repositories
     {
         Client GetClientById(Guid id);
         Client GetClientByFirstName(string firstname);
-
         Client GetClientByAgeAndLastName(int age, string lastName);
   
     }

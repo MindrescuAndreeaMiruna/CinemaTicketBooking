@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddSeeders();
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+//builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 var app = builder.Build();
 //SeedData(app);
@@ -40,8 +40,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-app.UseMiddleware<JwtMiddleware>();
+//app.UseAuthorization();
+//app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 
@@ -53,7 +53,15 @@ void SeedData(IHost app)
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
     using (var scope = scopedFactory.CreateScope())
     {
-        var service = scope.ServiceProvider.GetService<ClientSeeder>();
-        service.SeedInitialClient();
+        var service1 = scope.ServiceProvider.GetService<FilmSeeder>();
+        service1.SeedInitialFilm();
+
+        var service2 = scope.ServiceProvider.GetService<TicketSeeder>();
+        service2.SeedInitialTicket();
+
+        var service3 = scope.ServiceProvider.GetService<ClientSeeder>();
+        service3.SeedInitialClient();
+
+
     }
 }
