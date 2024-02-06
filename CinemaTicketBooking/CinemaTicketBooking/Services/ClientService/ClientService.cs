@@ -36,11 +36,12 @@ namespace CinemaTicketBooking.Services.ClientService
             await _clientsRepository.SaveAsync();
         }
 
-        public async Task <List<ClientDTO>> GetAllClients()
+        public async Task<List<ClientDTO>> GetAllClients()
         {
             var clients = await _clientsRepository.GetAll();
             return _mapper.Map<List<ClientDTO>>(clients);
         }
+
 
         public void DeleteClient(Guid id)
         {

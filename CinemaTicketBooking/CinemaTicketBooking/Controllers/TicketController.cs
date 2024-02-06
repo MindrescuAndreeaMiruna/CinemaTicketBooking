@@ -1,5 +1,8 @@
 ﻿using CinemaTicketBooking.Data;
 using CinemaTicketBooking.Models.DTOs;
+using CinemaTicketBooking.Repositories;
+using CinemaTicketBooking.Services.FilmService;
+using CinemaTicketBooking.Services.TicketService;
 using FilmTicketBooking.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -13,37 +16,52 @@ namespace CinemaTicketBooking.Controllers
     [ApiController]
     public class TicketController : ControllerBase
     {
-        private  Context _context;
+        public readonly ITicketService _ticketService;
+        public readonly ITicketRepository _ticketRepository;
 
-        public TicketController(Context context)
+        public TicketController(ITicketService ticketService, ITicketRepository ticketRepository)
         {
-            _context = context;
+            _ticketService = ticketService;
+            _ticketRepository = ticketRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetClients()
+
+
+        [HttpGet("GetTicketById")]
+        public IActionResult GetTicketById([FromQuery] Guid id)
         {
-            return Ok(await _context.Clients.ToListAsync());
+            var ticket = _ticketRepository.GetTicketById(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            return Ok(ticket);
         }
 
-        [HttpGet("ticketById/{id}")]
-        public async Task<IActionResult> GetTicketsById([FromRoute] Guid id)
+        [HttpGet("GetTicketByHallNumber")]
+        public IActionResult GetTicketByHallNumber([FromQuery] int hallNumber)
         {
-            var ticketById = _context.Tickets.FirstOrDefault(x => x.Id == id);
-            return Ok(ticketById);
+            var ticket = _ticketService.GetTicketByHallNumber(hallNumber);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            return Ok(ticket);
         }
-        [HttpPost("createTicket")]
-        public async Task<IActionResult> CreateTicket(TicketDTO ticketDTO)
+
+
+        [HttpGet("GetAllTickets")]
+        public async Task<IActionResult> GetAllTickets()
         {
-            var newTicket = new Ticket();
-            newTicket.HallNumber = ticketDTO.HallNumber;
-            newTicket.Seat = ticketDTO.Seat;
-            newTicket.Row = ticketDTO.Row;
+            var tickets = await _ticketService.GetAllTickets();
+            return Ok(tickets);
+        }
 
-            await _context.AddAsync(newTicket);
-            await _context.SaveChangesAsync();
-
-            return Ok(newTicket);
+        [HttpDelete("DeleteTicket")]
+        public IActionResult DeleteTicket([FromQuery] Guid id)
+        {
+            _ticketService.DeleteTicket(id);
+            return NoContent();
         }
     }
 }

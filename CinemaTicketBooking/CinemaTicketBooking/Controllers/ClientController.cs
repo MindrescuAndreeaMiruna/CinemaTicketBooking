@@ -52,9 +52,9 @@ namespace FilmTicketBooking.Controllers
         }
 
         [HttpGet("GetAllClients")]
-        public IActionResult GetAllClients()
+        public async Task<IActionResult> GetAllClients()
         {
-            var clients = _clientService.GetAllClients();
+            var clients = await _clientService.GetAllClients();
             return Ok(clients);
         }
 

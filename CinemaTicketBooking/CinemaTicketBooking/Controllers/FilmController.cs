@@ -1,5 +1,8 @@
 ﻿using CinemaTicketBooking.Data;
 using CinemaTicketBooking.Models.DTOs;
+using CinemaTicketBooking.Repositories;
+using CinemaTicketBooking.Services.ClientService;
+using CinemaTicketBooking.Services.FilmService;
 using FilmTicketBooking.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -13,39 +16,49 @@ namespace CinemaTicketBooking.Controllers
     [ApiController]
     public class FilmController : ControllerBase
     {
-        private Context _context;
+        public readonly IFilmService _filmService;
+        public readonly IFilmRepository _filmRepository;
 
-        public FilmController(Context context)
+        public FilmController(IFilmService filmService, IFilmRepository filmRepository)
         {
-            _context = context;
+            _filmService = filmService;
+            _filmRepository = filmRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetClients()
+        [HttpGet("GetFilmById")]
+        public IActionResult GetFilmById([FromQuery] Guid id)
         {
-            return Ok(await _context.Films.ToListAsync());
+            var film = _filmRepository.GetFilmById(id);
+            if (film == null)
+            {
+                return NotFound();
+            }
+            return Ok(film);
         }
 
-        [HttpGet("filmById/{id}")]
-        public async Task<IActionResult> GetFilmsById([FromRoute] Guid id)
+        [HttpGet("GetFilmByFilmName")]
+        public IActionResult GetFilmByFilmName([FromQuery] string filmName)
         {
-            var filmById = _context.Films.FirstOrDefault(x => x.Id == id);
-            return Ok(filmById);
+            var film = _filmService.GetFilmByFilmName(filmName);
+            if (film == null)
+            {
+                return NotFound();
+            }
+            return Ok(film);
         }
 
-        [HttpPost("createFilm")]
-        public async Task<IActionResult> CreateFilm(FilmDTO filmDTO)
+        [HttpGet("GetAllFilms")]
+        public async Task<IActionResult> GetAllFilms()
         {
-            var newFilm = new Film();
-            newFilm.FilmName = filmDTO.FilmName;
-            newFilm.DurationMinutes = filmDTO.DurationMinutes;
-           
+            var films = await _filmService.GetAllFilms();
+            return Ok(films);
+        }
 
-            await _context.AddAsync(newFilm);
-            await _context.SaveChangesAsync();
-
-            return Ok(newFilm);
-
+        [HttpDelete("DeleteFilm")]
+        public IActionResult DeleteFilm([FromQuery] Guid id)
+        {
+            _filmService.DeleteFilm(id);
+            return NoContent();
         }
     }
 
