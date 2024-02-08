@@ -1,0 +1,20 @@
+<div>
+  <h2 class="header">Films</h2>
+  <div class="button-container">
+    <button class="get-button" (click)="getAllFilms()">Get All Films</button>
+    <input type="text" [(ngModel)]="filmlId" class="input-field" placeholder="Insert Film Id" (keyup.enter)="getFilmById()">
+    <input type="text" [(ngModel)]="filmName" class="input-field" placeholder="Insert film name" (keyup.enter)="getFilmByFilmName()">
+    <input type="text" [(ngModel)]="filmId1" class="input-field1" placeholder="Delete film with id" (keyup.enter)="deleteFilmById()">
+    <button class="delete-button" (click)="deleteAllFilms()">Delete All Films</button>
+  </div>
+
+</div>
+
+
+<div *ngIf="showDetails">
+  <div *ngFor="let film of films" class="film-container">
+    <div class="film-details">
+      <p> {{ film.filmName }}, DurationMinutes: {{film.durationMinutes}}</p>
+    </div>
+  </div>
+</div>

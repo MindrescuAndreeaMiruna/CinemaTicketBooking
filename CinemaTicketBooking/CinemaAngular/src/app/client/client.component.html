@@ -1,0 +1,52 @@
+<div>
+  <h2 class="header">Clients</h2>
+  <div class="button-container">
+    <button class="get-button" (click)="getAllClients()">Get All Clients</button>
+    <input type="text" [(ngModel)]="clientId" class="input-field" placeholder="Insert Client ID" (keyup.enter)="getClientById()">
+    <input type="text" [(ngModel)]="clientFirstName" class="input-field" placeholder="Insert Client First Name" (keyup.enter)="getClientByFirstName()">
+    <input type="text" [(ngModel)]="clientId1" class="input-field1" placeholder="Delete Client with ID" (keyup.enter)="deleteClientById()">
+    <button class="delete-button" (click)="deleteAllClienti()">Delete All Clients</button>
+  </div>
+
+</div>
+
+
+<div *ngIf="showDetails">
+  <div *ngFor="let client of clients" class="client-container">
+    <div class="client-details">
+      <p> {{ client.lastName }} {{client.firstName}}, {{client.telephoneNumber}}, {{client.email}}, Id client: {{client.id}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="form-container">
+  <h3>Add new client</h3>
+  <form (submit)="createClient()">
+    <div class="form-group">
+      <label for="id">Id:</label>
+      <input type="text" id="id" [(ngModel)]="clientId2" name="id" required>
+    </div>
+    <div class="form-group">
+      <label for="lastName">LastName:</label>
+      <input type="text" id="lastName" [(ngModel)]="clientNume1" name="lastName" required>
+    </div>
+    <div class="form-group">
+      <label for="firstName">FirstName:</label>
+      <input type="text" id="firstName" [(ngModel)]="clientPrenume" name="firstName" required>
+    </div>
+    <div class="form-group">
+      <label for="telephoneNumber">TelephoneNumber:</label>
+      <input type="text" id="telephoneNumber" [(ngModel)]="clientTelefon" name="telephoneNumber" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" id="email" [(ngModel)]="clientEmail" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="tickets">Tickets:</label>
+      <input type="text" id="tickets" [(ngModel)]="clientTickets" name="tickets">
+    </div>
+   
+    <button type="submit">Add Client</button>
+  </form>
+</div>
